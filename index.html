@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atomic — Software sob medida</title>
+  <meta name="description" content="Atomic Ltda — desenvolvimento de software, aplicativos e sistemas sob medida.">
+  <link rel="icon" type="image/png" href="logos/logo%20transparent.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #E30A0A;
+      --red-dark: #B80707;
+      --black: #0A0A0A;
+      --white: #FFFFFF;
+      --paper: #F6F5F3;
+      --gray: #6B6B6B;
+      --line: #E2E0DC;
+      --max: 1240px;
+      --gutter: clamp(16px, 4vw, 48px);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Archivo", system-ui, sans-serif;
+      font-variation-settings: "wdth" 100;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* Tipografia de marca: larga e pesada, como o wordmark ATOMIC */
+    .display {
+      font-weight: 900;
+      font-stretch: 125%;
+      font-variation-settings: "wdth" 125;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 0.92;
+    }
+    .dot { color: var(--red); }
+    .sq {
+      display: inline-block;
+      width: 0.18em; height: 0.24em;
+      background: var(--red);
+      margin-left: 0.06em;
+      vertical-align: baseline;
+    }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 10px; height: 13px; background: var(--red); }
+
+    /* NAV */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { width: 44px; height: 44px; }
+    .brand span { font-size: 20px; }
+    .links { display: flex; gap: 32px; font-size: 15px; font-weight: 600; }
+    .links a { position: relative; }
+    .links a::after {
+      content: ""; position: absolute; left: 0; bottom: -4px; height: 3px; width: 0;
+      background: var(--red); transition: width .25s ease;
+    }
+    .links a:hover::after { width: 100%; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 24px; font-weight: 700; font-size: 15px;
+      background: var(--red); color: var(--white);
+      transition: background .2s, transform .2s;
+    }
+    .btn:hover { background: var(--black); }
+    .btn.ghost { background: transparent; color: var(--black); box-shadow: inset 0 0 0 2px var(--black); }
+    .btn.ghost:hover { background: var(--black); color: var(--white); }
+    .btn .arrow { transition: transform .2s; }
+    .btn:hover .arrow { transform: translateX(4px); }
+    .menu-btn { display: none; background: none; border: 0; cursor: pointer; width: 40px; height: 40px; }
+    .menu-btn i { display: block; height: 3px; background: var(--black); margin: 6px 6px; }
+
+    /* HERO */
+    .hero { padding: clamp(56px, 10vw, 120px) 0 0; position: relative; }
+    .hero h1 { font-size: clamp(44px, 9.5vw, 136px); }
+    .hero h1 .line { display: block; }
+    .hero-foot {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: end;
+      margin-top: clamp(40px, 6vw, 72px); padding-bottom: clamp(48px, 7vw, 88px);
+    }
+    .hero-foot p { font-size: clamp(17px, 1.6vw, 21px); color: #333; max-width: 520px; }
+    .hero-actions { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; }
+
+    /* Faixa vermelha, eco do banner */
+    .band {
+      background: var(--red); color: var(--black);
+      overflow: hidden; white-space: nowrap; border-block: 0;
+    }
+    .band-track {
+      display: inline-flex; gap: 48px; padding: 22px 0;
+      animation: marquee 28s linear infinite;
+    }
+    .band-track span { font-size: clamp(28px, 4vw, 52px); display: inline-flex; align-items: center; gap: 48px; }
+    .band-track span::after { content: ""; width: 14px; height: 18px; background: var(--white); }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    section { padding: clamp(72px, 10vw, 128px) 0; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 32px; margin-bottom: 56px; flex-wrap: wrap; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 64px); margin-top: 18px; }
+    .section-head p { max-width: 400px; color: var(--gray); font-size: 17px; }
+
+    /* SERVIÇOS */
+    .services { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 2px solid var(--black); }
+    .service {
+      padding: 40px 32px 40px 0; border-bottom: 1px solid var(--line);
+      display: grid; grid-template-columns: 64px 1fr; gap: 16px;
+      transition: background .25s, padding .25s;
+    }
+    .service:nth-child(odd) { border-right: 1px solid var(--line); }
+    .service:nth-child(even) { padding-left: 32px; }
+    .service .num { font-size: 14px; font-weight: 700; color: var(--red); padding-top: 8px; }
+    .service h3 { font-size: 24px; font-weight: 800; font-stretch: 115%; font-variation-settings: "wdth" 115; margin-bottom: 10px; }
+    .service p { color: var(--gray); }
+    .service ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .service li { font-size: 13px; font-weight: 600; padding: 6px 12px; background: var(--paper); }
+
+    /* SOBRE (escuro) */
+    .about { background: var(--black); color: var(--white); position: relative; overflow: hidden; }
+    .about .eyebrow { color: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+    .about h2 { font-size: clamp(34px, 5vw, 64px); margin: 18px 0 28px; }
+    .about p { color: #BDBDBD; font-size: 18px; margin-bottom: 18px; max-width: 540px; }
+    .mark-big {
+      aspect-ratio: 1; background: var(--white); position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mark-big img { width: 88%; }
+    .mark-big::after {
+      content: ""; position: absolute; right: -14px; bottom: -14px;
+      width: 100%; height: 100%; border: 2px solid var(--red); z-index: -1;
+    }
+    .about-grid > div:first-child { position: relative; z-index: 1; }
+
+    /* PROCESSO */
+    .process { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--black); border: 2px solid var(--black); }
+    .step { background: var(--white); padding: 32px 28px 40px; display: flex; flex-direction: column; transition: background .25s, color .25s; }
+    .step:hover { background: var(--red); color: var(--white); }
+    .step:hover p { color: var(--white); }
+    .step .n { font-size: 56px; }
+    .step:hover .n .dot { color: var(--black); }
+    .step h3 { font-size: 20px; font-weight: 800; margin: 56px 0 8px; }
+    .step p { color: var(--gray); font-size: 15px; transition: color .25s; }
+
+    /* VALORES */
+    .values { background: var(--paper); }
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .value { background: var(--white); padding: 36px 32px; border-top: 6px solid var(--red); }
+    .value h3 { font-size: 22px; margin-bottom: 12px; }
+    .value p { color: var(--gray); }
+
+    /* CTA */
+    .cta { background: var(--red); color: var(--black); padding: clamp(72px, 10vw, 120px) 0; }
+    .cta h2 { font-size: clamp(40px, 7.5vw, 104px); }
+    .cta h2 em { font-style: normal; color: var(--white); }
+    .cta-row { display: flex; justify-content: space-between; align-items: end; gap: 32px; margin-top: 48px; flex-wrap: wrap; }
+    .cta-row p { font-size: 19px; max-width: 480px; font-weight: 500; }
+    .cta .btn { background: var(--black); padding: 18px 30px; font-size: 16px; }
+    .cta .btn:hover { background: var(--white); color: var(--black); }
+
+    /* FOOTER */
+    footer { background: var(--black); color: #BDBDBD; padding: 72px 0 32px; font-size: 15px; }
+    .foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 48px; padding-bottom: 56px; border-bottom: 1px solid #262626; }
+    .foot-brand .display { color: var(--white); font-size: 40px; }
+    .foot-brand p { margin-top: 16px; max-width: 340px; }
+    footer h4 { color: var(--white); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 18px; }
+    footer li { list-style: none; margin-bottom: 10px; }
+    footer a:hover { color: var(--white); }
+    .legal { display: flex; justify-content: space-between; gap: 16px; padding-top: 28px; font-size: 13px; flex-wrap: wrap; }
+    .legal strong { color: var(--white); font-weight: 600; }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .band-track { animation: none; }
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 960px) {
+      .process { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; }
+      .mark-big { max-width: 420px; }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+      .foot-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 760px) {
+      .links, nav > .btn { display: none; }
+      .menu-btn { display: block; }
+      header.open .links {
+        display: flex; flex-direction: column; gap: 0;
+        position: absolute; top: 72px; left: 0; right: 0;
+        background: var(--white); border-bottom: 2px solid var(--black);
+      }
+      header.open .links a { padding: 18px var(--gutter); border-top: 1px solid var(--line); }
+      .hero-foot { grid-template-columns: 1fr; }
+      .hero-actions { justify-content: flex-start; }
+      .services { grid-template-columns: 1fr; }
+      .service, .service:nth-child(even) { padding: 32px 0; border-right: 0 !important; }
+      .process { grid-template-columns: 1fr; }
+      .step { min-height: 0; }
+      .foot-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="top">
+    <nav class="wrap">
+      <a href="#top" class="brand" aria-label="Atomic — início">
+        <img src="logos/logo%20transparent.png" alt="">
+        <span class="display">Atomic</span>
+      </a>
+      <div class="links">
+        <a href="#servicos">Serviços</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#processo">Processo</a>
+        <a href="#contato">Contato</a>
+      </div>
+      <a href="#contato" class="btn">Fale conosco <span class="arrow">→</span></a>
+      <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false"><i></i><i></i><i></i></button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <div class="hero">
+      <div class="wrap">
+        <span class="eyebrow reveal">Tecnologia &amp; software</span>
+        <h1 class="display reveal" style="margin-top:28px">
+          <span class="line">Pequenas</span>
+          <span class="line">partes<span class="dot">.</span></span>
+          <span class="line">Grandes</span>
+          <span class="line">sistemas<span class="dot">.</span></span>
+        </h1>
+        <div class="hero-foot">
+          <p class="reveal">A Atomic desenvolve software sob medida — de aplicativos e plataformas web a integrações e automações — construído a partir de componentes sólidos, simples e feitos para durar.</p>
+          <div class="hero-actions reveal">
+            <a href="#contato" class="btn">Iniciar um projeto <span class="arrow">→</span></a>
+            <a href="#servicos" class="btn ghost">Ver serviços</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAIXA -->
+    <div class="band" aria-hidden="true">
+      <div class="band-track display">
+        <span>Web</span><span>Mobile</span><span>Sistemas</span><span>Integrações</span><span>Cloud</span><span>Automação</span>
+        <span>Web</span><span>Mobile</span><span>Sistemas</span><span>Integrações</span><span>Cloud</span><span>Automação</span>
+      </div>
+    </div>
+
+    <!-- SERVIÇOS -->
+    <section id="servicos">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">O que fazemos</span>
+            <h2 class="display">Serviços<span class="dot">.</span></h2>
+          </div>
+          <p>Do conceito à produção, cuidamos de cada camada do seu produto digital.</p>
+        </div>
+        <div class="services">
+          <article class="service reveal">
+            <span class="num">01</span>
+            <div>
+              <h3>Aplicações web</h3>
+              <p>Plataformas, portais e painéis rápidos, seguros e fáceis de manter.</p>
+              <ul><li>Front-end</li><li>Back-end</li><li>APIs</li></ul>
+            </div>
+          </article>
+          <article class="service reveal">
+            <span class="num">02</span>
+            <div>
+              <h3>Apps mobile</h3>
+              <p>Aplicativos para iOS e Android com experiência nativa e código eficiente.</p>
+              <ul><li>iOS</li><li>Android</li><li>Multiplataforma</li></ul>
+            </div>
+          </article>
+          <article class="service reveal">
+            <span class="num">03</span>
+            <div>
+              <h3>Sistemas sob medida</h3>
+              <p>Software moldado aos processos da sua empresa, não o contrário.</p>
+              <ul><li>ERP</li><li>Gestão</li><li>Automação</li></ul>
+            </div>
+          </article>
+          <article class="service reveal">
+            <span class="num">04</span>
+            <div>
+              <h3>Integrações &amp; cloud</h3>
+              <p>Conectamos sistemas, dados e serviços em uma infraestrutura escalável.</p>
+              <ul><li>Integrações</li><li>Infraestrutura</li><li>Dados</li></ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section id="sobre" class="about">
+      <div class="wrap about-grid">
+        <div class="reveal">
+          <div class="mark-big"><img src="logos/logo%20transparent.png" alt="Símbolo da Atomic"></div>
+        </div>
+        <div class="reveal">
+          <span class="eyebrow">Sobre a Atomic</span>
+          <h2 class="display">Precisão em cada detalhe<span class="dot">.</span></h2>
+          <p>Acreditamos que bons sistemas nascem de partes pequenas e bem-feitas. Como um átomo, cada componente que construímos é simples, estável e combina com os demais para formar algo maior.</p>
+          <p>Trabalhamos lado a lado com nossos clientes para transformar problemas complexos em software claro, confiável e pronto para crescer.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESSO -->
+    <section id="processo">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Como trabalhamos</span>
+            <h2 class="display">Processo<span class="dot">.</span></h2>
+          </div>
+          <p>Etapas claras, entregas frequentes e comunicação direta do início ao fim.</p>
+        </div>
+        <div class="process">
+          <div class="step reveal"><span class="n display">01<span class="dot">.</span></span><h3>Descoberta</h3><p>Entendemos o negócio, os usuários e os objetivos do projeto.</p></div>
+          <div class="step reveal"><span class="n display">02<span class="dot">.</span></span><h3>Design</h3><p>Arquitetura, fluxos e interfaces definidos antes da primeira linha de código.</p></div>
+          <div class="step reveal"><span class="n display">03<span class="dot">.</span></span><h3>Desenvolvimento</h3><p>Ciclos curtos com entregas testáveis e acompanhamento contínuo.</p></div>
+          <div class="step reveal"><span class="n display">04<span class="dot">.</span></span><h3>Evolução</h3><p>Lançamento, monitoramento e melhorias constantes após a entrega.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALORES -->
+    <section class="values">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Nossos princípios</span>
+            <h2 class="display">Essência<span class="dot">.</span></h2>
+          </div>
+        </div>
+        <div class="values-grid">
+          <div class="value reveal"><h3 class="display">Simples</h3><p>Soluções diretas, sem complexidade desnecessária.</p></div>
+          <div class="value reveal"><h3 class="display">Sólido</h3><p>Código testado, seguro e preparado para o longo prazo.</p></div>
+          <div class="value reveal"><h3 class="display">Próximo</h3><p>Parceria transparente, com você em cada decisão.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contato" class="cta">
+      <div class="wrap">
+        <span class="eyebrow" style="color:var(--black)">Vamos conversar</span>
+        <h2 class="display" style="margin-top:24px">Tem um projeto<br>em <em>mente?</em></h2>
+        <div class="cta-row">
+          <p>Conte sua ideia para a gente. Respondemos rápido e sem compromisso.</p>
+          <a href="mailto:matheusqueiroz@atomicsolucoes.com" class="btn">contato@atomicsolucoes.com <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <span class="display">Atomic<span class="dot">.</span></span>
+          <p>Software sob medida, construído a partir de partes simples e sólidas.</p>
+        </div>
+        <div>
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#processo">Processo</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Empresa</h4>
+          <ul>
+            <li>Atomic Ltda</li>
+            <li>CNPJ 59.479.309/0001-59</li>
+            <li><a href="mailto:matheusqueiroz@atomicsolucoes.com">contato@atomicsolucoes.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="legal">
+        <span>© <span id="year">2026</span> <strong>Atomic Ltda</strong> · CNPJ 59.479.309/0001-59 · Todos os direitos reservados.</span>
+        <a href="#top">Voltar ao topo ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const header = document.querySelector('header');
+    const menuBtn = document.querySelector('.menu-btn');
+    menuBtn.addEventListener('click', () => {
+      const open = header.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open);
+    });
+    document.querySelectorAll('.links a').forEach(a =>
+      a.addEventListener('click', () => header.classList.remove('open')));
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
